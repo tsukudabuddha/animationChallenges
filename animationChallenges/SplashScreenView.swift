@@ -8,21 +8,19 @@
 
 import UIKit
 
-class StackLoadingView: UIView {
+class SplashScreenView: UIView {
     
     var imageView: UIImageView!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String) {
         super.init(frame: frame)
-        backgroundColor = UIColor.black
-        animateLines2()
+        backgroundColor = logoColor
+        animateLines()
         
-        let imageView = UIImageView(image: UIImage(named: "apple"))
-        let width: CGFloat = 200
-        let height: CGFloat = 200
-        let x = bounds.midX - (0.5 * width)
-        let y = bounds.midY - (0.5 * height)
-        imageView.frame = CGRect(x: x, y: y, width: width, height: height)
+        let imageView = UIImageView(image: UIImage(named: logoName))
+        let x = bounds.midX - (0.5 * logoSize.width)
+        let y = bounds.midY - (0.5 * logoSize.height)
+        imageView.frame = CGRect(x: x, y: y, width: logoSize.width, height: logoSize.height)
         self.imageView = imageView
         addSubview(self.imageView)
     }
@@ -32,24 +30,6 @@ class StackLoadingView: UIView {
     }
     
     func animateLines() {
-        let lineCount = 10
-        let lineHeight = bounds.maxY / CGFloat(lineCount)
-        let lineWidth = bounds.maxX
-        
-        for i in 0...lineCount {
-            let lineFrame = CGRect(x: 0, y: (bounds.maxY + lineHeight), width: lineWidth, height: lineHeight)
-            let lineView = UIView(frame: lineFrame)
-            addSubview(lineView)
-            let delay: TimeInterval = 0.3 * Double(i)
-            UIView.animate(withDuration: 0.5, delay: delay, options: [], animations: {
-                lineView.frame = CGRect(x: 0, y: (self.bounds.minY + (CGFloat(i) * lineHeight)), width: lineWidth, height: lineHeight)
-                lineView.backgroundColor = UIColor.white
-            }, completion: nil)
-            
-        }
-    }
-    
-    func animateLines2() {
         let lineCount = 10
         let lineHeight = bounds.maxY / CGFloat(lineCount)
         let lineWidth = bounds.maxX

@@ -13,11 +13,48 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        let loadingFrame = CGRect(x: view.frame.midX, y: view.frame.midY, width: 100, height: 100)
-        let loading = StackLoadingView(frame: view.frame)
+
+        let loading = SplashScreenView(frame: view.frame, logoColor: UIColor.black, logoSize: CGSize(width: 200, height: 200), logoName: "apple")
         view.addSubview(loading)
         
         
+        
+//        view.backgroundColor = UIColor.black
+//        let hamburgerMenuFrame = CGRect(x: 0, y: 0, width: 100, height: view.bounds.maxY)
+//        let hamburgerMenu = HamburgerMenuView(frame: hamburgerMenuFrame)
+//        view.addSubview(hamburgerMenu)
+        
+        
+        
+    }
+    
+    @objc func showMenu() {
+        for i in 0...4 {
+            let width = (self.view.frame.height / 5)
+            let view = UIView(frame: CGRect(x: (-1 * width) , y: (CGFloat(i) * width), width: width, height: width))
+            switch i {
+            case 0:
+                view.backgroundColor = UIColor.red
+            case 1:
+                view.backgroundColor = UIColor.orange
+            case 2:
+                view.backgroundColor = UIColor.yellow
+            case 3:
+                view.backgroundColor = UIColor.green
+            case 4:
+                view.backgroundColor = UIColor.blue
+            default:
+                view.backgroundColor = UIColor.gray
+            }
+            
+            self.view.addSubview(view)
+            
+            let delay = TimeInterval(0.25 * Double(i))
+            
+            UIView.animate(withDuration: 1, delay: delay, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.1, options: [], animations: {
+                view.frame = CGRect(x: CGFloat(i) * width, y: self.view.frame.maxY - width, width: width, height: width)
+            }, completion: createUpperView)
+        }
     }
 
     override func didReceiveMemoryWarning() {
