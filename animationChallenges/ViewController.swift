@@ -13,7 +13,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        createBottomBoxesAnimatedBounce()
+//        let loadingFrame = CGRect(x: view.frame.midX, y: view.frame.midY, width: 100, height: 100)
+        let loading = StackLoadingView(frame: view.frame)
+        view.addSubview(loading)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
