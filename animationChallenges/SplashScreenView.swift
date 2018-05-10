@@ -8,9 +8,14 @@
 
 import UIKit
 
+enum TransitionType {
+    case lineFade // default
+}
+
 class SplashScreenView: UIView {
     
     var imageView: UIImageView!
+    var transitionType: TransitionType = .lineFade
     
     init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String) {
         super.init(frame: frame)
