@@ -21,11 +21,11 @@ class SplashScreenView: UIView {
     
     private var imageView: UIImageView!
     var orientation: LineOrientation = .horizontal  // Vertical or Horizontal Lines
+    var lineCount: Int! = 10  // Number of lines
     
     init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String) {
         super.init(frame: frame)
         backgroundColor = logoColor
-        animateLines()
         
         let imageView = UIImageView(image: UIImage(named: logoName))
         let x = bounds.midX - (0.5 * logoSize.width)
@@ -40,7 +40,7 @@ class SplashScreenView: UIView {
     }
     
     func animateLines() {
-        let lineCount = 10
+        self.imageView.image = UIImage(named: "apple")
         let lineHeight = bounds.maxY / CGFloat(lineCount)
         let lineWidth = bounds.maxX
         
@@ -49,6 +49,7 @@ class SplashScreenView: UIView {
             let lineView = UIView(frame: lineFrame)
             lineView.backgroundColor = UIColor.clear
             addSubview(lineView)
+            sendSubview(toBack: lineView)
             let delay: TimeInterval = 1 + (0.1 * Double(i))
             let duration = 0.5
             UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
