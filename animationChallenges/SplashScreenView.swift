@@ -21,7 +21,8 @@ class SplashScreenView: UIView {
     
     private var imageView: UIImageView!
     var orientation: LineOrientation = .horizontal  // Vertical or Horizontal Lines
-    var lineCount: Int! = 10  // Number of lines
+    var lineCount: Int = 10  // Number of lines
+    var lineAnimationDuration: Double = 0.5
     
     init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String) {
         super.init(frame: frame)
@@ -50,25 +51,30 @@ class SplashScreenView: UIView {
             lineView.backgroundColor = UIColor.clear
             addSubview(lineView)
             sendSubview(toBack: lineView)
-            let delay: TimeInterval = 1 + (0.1 * Double(i))
-            let duration = 0.5
-            UIView.animate(withDuration: duration, delay: delay, options: [], animations: {
+            let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
+            lineAnimationDuration = 0.5
+            UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
                 lineView.backgroundColor = UIColor.white
-            }, completion: { (complete) in
-                /* Make Logo dissappear */
-                
-                // Shrink
-                UIView.animate(withDuration: 0.2, delay: duration, options: [], animations: {
-                    self.imageView.frame = self.imageView.frame.insetBy(dx: 10, dy: 10)
-                }, completion: { (complete) in
-                    
-                    // Grow and fade
-                    UIView.animate(withDuration: 0.6, delay: 0, options: [], animations: {
-                        self.imageView.frame = self.imageView.frame.insetBy(dx: -50, dy: -50)
-                        self.imageView.layer.opacity = 0
-                    }, completion: nil)
-                })
-            })
+            }, completion: nil)
+            if i == (lineCount - 1) {
+                animateLogo()
+            }
         }
+    }
+    
+    func animateLogo() {
+        /* Make Logo dissappear */
+        let logoDelay = 1 + (0.05 * Double(lineCount)) + Double(1 / Double(lineCount))
+        // Shrink
+        UIView.animate(withDuration: 0.2, delay: logoDelay, options: [], animations: {
+            self.imageView.frame = self.imageView.frame.insetBy(dx: 10, dy: 10)
+        }, completion: { (complete) in
+            
+            // Grow and fade
+            UIView.animate(withDuration: 0.6, delay: 0, options: [], animations: {
+                self.imageView.frame = self.imageView.frame.insetBy(dx: -50, dy: -50)
+                self.imageView.layer.opacity = 0
+            }, completion: nil)
+        })
     }
 }
