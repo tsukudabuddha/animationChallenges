@@ -21,7 +21,6 @@ enum LineOrientation {
 class SplashScreenView: UIView {
     
     private var imageView: UIImageView!
-    var orientation: LineOrientation!  // Vertical or Horizontal Lines
 
     var lineCount: Int!  // Number of lines
     var lineAnimationDuration: Double!
@@ -37,7 +36,7 @@ class SplashScreenView: UIView {
         shouldDrawLines = false
     }
     
-    convenience init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String, transition: TransitionType = .fadeOnly) {
+    convenience init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String, transition: TransitionType = .fadeOnly, lineOrientation: LineOrientation = .horizontal) {
         self.init(frame: frame)
         
         /* Set Default Values for required vars */
@@ -56,7 +55,7 @@ class SplashScreenView: UIView {
             backgroundColor = UIColor.white
             animateLogo()
         case .shutter :
-            animateLines()
+            animateLines(lineOrientation: lineOrientation)
         }
     }
     
@@ -68,25 +67,48 @@ class SplashScreenView: UIView {
         super.init(coder: aDecoder)
     }
     
-    func animateLines() {
-        let lineHeight = bounds.maxY / CGFloat(lineCount)
-        let lineWidth = bounds.maxX
-        
-        for i in 0...lineCount {
-            let lineFrame = CGRect(x: 0, y: (self.bounds.minY + (CGFloat(i) * lineHeight)), width: lineWidth, height: lineHeight)
-            let lineView = UIView(frame: lineFrame)
-            lineView.backgroundColor = UIColor.clear
-            addSubview(lineView)
-            sendSubview(toBack: lineView)
-            let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
-            lineAnimationDuration = 0.5
-            UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
-                lineView.backgroundColor = UIColor.white
-            }, completion: nil)
-            if i == (lineCount - 1) && shouldAnimateLogo {
-                animateLogo(lines: true)
+    func animateLines(lineOrientation: LineOrientation) {
+        switch lineOrientation {
+        case .horizontal:
+            let lineHeight = bounds.maxY / CGFloat(lineCount)
+            let lineWidth = bounds.maxX
+            
+            for i in 0...lineCount {
+                let lineFrame = CGRect(x: 0, y: (self.bounds.minY + (CGFloat(i) * lineHeight)), width: lineWidth, height: lineHeight)
+                let lineView = UIView(frame: lineFrame)
+                lineView.backgroundColor = UIColor.clear
+                addSubview(lineView)
+                sendSubview(toBack: lineView)
+                let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
+                lineAnimationDuration = 0.5
+                UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
+                    lineView.backgroundColor = UIColor.white
+                }, completion: nil)
+                if i == (lineCount - 1) && shouldAnimateLogo {
+                    animateLogo(lines: true)
+                }
+            }
+        case .vertical:
+            let lineHeight = bounds.maxY
+            let lineWidth = bounds.maxX / CGFloat(lineCount)
+            
+            for i in 0...lineCount {
+                let lineFrame = CGRect(x: (self.bounds.minX + (CGFloat(i) * lineWidth)), y: 0, width: lineWidth, height: lineHeight)
+                let lineView = UIView(frame: lineFrame)
+                lineView.backgroundColor = UIColor.clear
+                addSubview(lineView)
+                sendSubview(toBack: lineView)
+                let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
+                lineAnimationDuration = 0.5
+                UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
+                    lineView.backgroundColor = UIColor.white
+                }, completion: nil)
+                if i == (lineCount - 1) && shouldAnimateLogo {
+                    animateLogo(lines: true)
+                }
             }
         }
+        
     }
     
     private func animateLogo(lines: Bool = false) {
