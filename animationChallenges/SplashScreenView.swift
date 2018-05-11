@@ -9,7 +9,8 @@
 import UIKit
 
 enum TransitionType {
-    case fadeOnly // default
+    case shutter // default
+    case fadeOnly
 }
 
 enum LineOrientation {
@@ -20,20 +21,47 @@ enum LineOrientation {
 class SplashScreenView: UIView {
     
     private var imageView: UIImageView!
-    var orientation: LineOrientation = .horizontal  // Vertical or Horizontal Lines
-    var lineCount: Int = 10  // Number of lines
-    var lineAnimationDuration: Double = 0.5
+    var orientation: LineOrientation!  // Vertical or Horizontal Lines
+
+    var lineCount: Int!  // Number of lines
+    var lineAnimationDuration: Double!
     
-    init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String) {
+    var imageName: String!
+    var shouldAnimateLogo: Bool!
+    var shouldDrawLines: Bool!
+    
+    override init(frame: CGRect) {
         super.init(frame: frame)
+
+        shouldAnimateLogo = false
+        shouldDrawLines = false
+    }
+    
+    convenience init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String, transition: TransitionType = .fadeOnly) {
+        self.init(frame: frame)
+        
+        /* Set Default Values for required vars */
+        lineCount = 10
+        shouldAnimateLogo = true
+        
         backgroundColor = logoColor
         
-        let imageView = UIImageView(image: UIImage(named: logoName))
         let x = bounds.midX - (0.5 * logoSize.width)
         let y = bounds.midY - (0.5 * logoSize.height)
-        imageView.frame = CGRect(x: x, y: y, width: logoSize.width, height: logoSize.height)
-        self.imageView = imageView
+        setImageView(fromName: logoName, withSize: logoSize, withOriginPoint: CGPoint(x: x, y: y))
         addSubview(self.imageView)
+        
+        switch transition {
+        case .fadeOnly:
+            backgroundColor = UIColor.white
+            animateLogo()
+        case .shutter :
+            animateLines()
+        }
+    }
+    
+    convenience init(frame: CGRect, imageName: String) {
+        self.init(frame: frame)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -41,7 +69,6 @@ class SplashScreenView: UIView {
     }
     
     func animateLines() {
-        self.imageView.image = UIImage(named: "apple")
         let lineHeight = bounds.maxY / CGFloat(lineCount)
         let lineWidth = bounds.maxX
         
@@ -56,15 +83,21 @@ class SplashScreenView: UIView {
             UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
                 lineView.backgroundColor = UIColor.white
             }, completion: nil)
-            if i == (lineCount - 1) {
-                animateLogo()
+            if i == (lineCount - 1) && shouldAnimateLogo {
+                animateLogo(lines: true)
             }
         }
     }
     
-    func animateLogo() {
+    private func animateLogo(lines: Bool = false) {
         /* Make Logo dissappear */
-        let logoDelay = 1 + (0.05 * Double(lineCount)) + Double(1 / Double(lineCount))
+        var logoDelay = TimeInterval(0)
+        
+        // Make logo delay longer if lines are being drawn
+        if lines {
+            logoDelay = 1 + (0.05 * Double(lineCount)) + Double(1 / Double(lineCount))
+        }
+        
         // Shrink
         UIView.animate(withDuration: 0.2, delay: logoDelay, options: [], animations: {
             self.imageView.frame = self.imageView.frame.insetBy(dx: 10, dy: 10)
@@ -76,5 +109,24 @@ class SplashScreenView: UIView {
                 self.imageView.layer.opacity = 0
             }, completion: nil)
         })
+    }
+    
+    private func setImageView(fromName: String, withSize: CGSize?, withOriginPoint: CGPoint?) {
+        let imageView = UIImageView(image: UIImage(named: fromName))
+        var size = CGSize(width: 200, height: 200)
+        if let withSize = withSize {
+            size = withSize
+        }
+        
+        var x = bounds.midX - (0.5 * size.width)
+        var y = bounds.midY - (0.5 * size.height)
+        
+        if let withOriginPoint = withOriginPoint {
+            x = withOriginPoint.x
+            y = withOriginPoint.y
+        }
+        
+        imageView.frame = CGRect(x: x, y: y, width: size.width, height: size.height)
+        self.imageView = imageView
     }
 }
