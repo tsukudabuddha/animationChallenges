@@ -9,13 +9,18 @@
 import UIKit
 
 enum TransitionType {
-    case lineFade // default
+    case fadeOnly // default
+}
+
+enum LineOrientation {
+    case vertical
+    case horizontal
 }
 
 class SplashScreenView: UIView {
     
-    var imageView: UIImageView!
-    var transitionType: TransitionType = .lineFade
+    private var imageView: UIImageView!
+    var orientation: LineOrientation = .horizontal  // Vertical or Horizontal Lines
     
     init(frame: CGRect, logoColor: UIColor, logoSize: CGSize, logoName: String) {
         super.init(frame: frame)
