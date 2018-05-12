@@ -60,7 +60,8 @@ class SplashScreenView: UIView {
     }
     
     convenience init(frame: CGRect, imageName: String) {
-        self.init(frame: frame)
+        self.init(frame: frame, logoColor: UIColor.black, logoSize: CGSize(width: 200, height: 200), logoName: imageName)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -113,7 +114,7 @@ class SplashScreenView: UIView {
     
     private func animateLogo(lines: Bool = false) {
         /* Make Logo dissappear */
-        var logoDelay = TimeInterval(0)
+        var logoDelay = TimeInterval(0.5)
         
         // Make logo delay longer if lines are being drawn
         if lines {
