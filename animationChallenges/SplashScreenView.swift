@@ -64,6 +64,13 @@ class SplashScreenView: UIView {
         
     }
     
+    convenience init(frame: CGRect, lineOrientation: LineOrientation, lineCount: Int) {
+        self.init(frame: frame)
+        self.lineCount = lineCount
+        backgroundColor = UIColor.black
+        animateLines(lineOrientation: lineOrientation)
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
