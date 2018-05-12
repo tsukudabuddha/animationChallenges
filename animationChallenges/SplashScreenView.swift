@@ -64,7 +64,7 @@ class SplashScreenView: UIView {
         
     }
     
-    convenience init(frame: CGRect, lineOrientation: LineOrientation, lineCount: Int) {
+    convenience init(frame: CGRect, lineOrientation: LineOrientation = .horizontal, lineCount: Int = 10) {
         self.init(frame: frame)
         self.lineCount = lineCount
         backgroundColor = UIColor.black
@@ -76,44 +76,37 @@ class SplashScreenView: UIView {
     }
     
     func animateLines(lineOrientation: LineOrientation) {
+        
+        var lineHeight: CGFloat = 0
+        var lineWidth: CGFloat = 0
+        var lineFrame = CGRect.zero
+        
         switch lineOrientation {
         case .horizontal:
-            let lineHeight = bounds.maxY / CGFloat(lineCount)
-            let lineWidth = bounds.maxX
-            
-            for i in 0...lineCount {
-                let lineFrame = CGRect(x: 0, y: (self.bounds.minY + (CGFloat(i) * lineHeight)), width: lineWidth, height: lineHeight)
-                let lineView = UIView(frame: lineFrame)
-                lineView.backgroundColor = UIColor.clear
-                addSubview(lineView)
-                sendSubview(toBack: lineView)
-                let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
-                lineAnimationDuration = 0.5
-                UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
-                    lineView.backgroundColor = UIColor.white
-                }, completion: nil)
-                if i == (lineCount - 1) && shouldAnimateLogo {
-                    animateLogo(lines: true)
-                }
-            }
+            lineHeight = bounds.maxY / CGFloat(lineCount)
+            lineWidth = bounds.maxX
+        
         case .vertical:
-            let lineHeight = bounds.maxY
-            let lineWidth = bounds.maxX / CGFloat(lineCount)
-            
-            for i in 0...lineCount {
-                let lineFrame = CGRect(x: (self.bounds.minX + (CGFloat(i) * lineWidth)), y: 0, width: lineWidth, height: lineHeight)
-                let lineView = UIView(frame: lineFrame)
-                lineView.backgroundColor = UIColor.clear
-                addSubview(lineView)
-                sendSubview(toBack: lineView)
-                let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
-                lineAnimationDuration = 0.5
-                UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
-                    lineView.backgroundColor = UIColor.white
-                }, completion: nil)
-                if i == (lineCount - 1) && shouldAnimateLogo {
-                    animateLogo(lines: true)
-                }
+            lineHeight = bounds.maxY
+            lineWidth = bounds.maxX / CGFloat(lineCount)
+        }
+        for i in 0...lineCount {
+            if lineOrientation == .horizontal {
+                lineFrame = CGRect(x: 0, y: (self.bounds.minY + (CGFloat(i) * lineHeight)), width: lineWidth, height: lineHeight)
+            } else {
+                lineFrame = CGRect(x: (self.bounds.minX + (CGFloat(i) * lineWidth)), y: 0, width: lineWidth, height: lineHeight)
+            }
+            let lineView = UIView(frame: lineFrame)
+            lineView.backgroundColor = UIColor.clear
+            addSubview(lineView)
+            sendSubview(toBack: lineView)
+            let delay: TimeInterval = 1 + (0.05 * Double(i)) + Double(1 / Double(lineCount))
+            lineAnimationDuration = 0.5
+            UIView.animate(withDuration: lineAnimationDuration, delay: delay, options: [], animations: {
+                lineView.backgroundColor = UIColor.white
+            }, completion: nil)
+            if i == (lineCount - 1) && shouldAnimateLogo {
+                animateLogo(lines: true)
             }
         }
         
