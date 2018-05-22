@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		494250AC20B4CF79006F6FF1 /* UILabel+animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494250AB20B4CF79006F6FF1 /* UILabel+animations.swift */; };
+		494250AE20B4D52A006F6FF1 /* ToDoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494250AD20B4D52A006F6FF1 /* ToDoTableViewController.swift */; };
 		494DE38C20A2514A009A3D66 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494DE38B20A2514A009A3D66 /* AppDelegate.swift */; };
 		494DE38E20A2514A009A3D66 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494DE38D20A2514A009A3D66 /* ViewController.swift */; };
 		494DE39120A2514A009A3D66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 494DE38F20A2514A009A3D66 /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		494250AB20B4CF79006F6FF1 /* UILabel+animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+animations.swift"; sourceTree = "<group>"; };
+		494250AD20B4D52A006F6FF1 /* ToDoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoTableViewController.swift; sourceTree = "<group>"; };
 		494DE38820A2514A009A3D66 /* animationChallenges.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = animationChallenges.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494DE38B20A2514A009A3D66 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494DE38D20A2514A009A3D66 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -68,7 +72,9 @@
 				498BD16C20A40B8A00B0C6D8 /* HamburgerMenuView.swift */,
 				498BD16A20A37BFE00B0C6D8 /* SplashScreenView.swift */,
 				498BD16820A3682800B0C6D8 /* loadingView.swift */,
+				494250AB20B4CF79006F6FF1 /* UILabel+animations.swift */,
 				494DE38F20A2514A009A3D66 /* Main.storyboard */,
+				494250AD20B4D52A006F6FF1 /* ToDoTableViewController.swift */,
 				494DE39220A2514C009A3D66 /* Assets.xcassets */,
 				494DE39420A2514D009A3D66 /* LaunchScreen.storyboard */,
 				494DE39720A2514D009A3D66 /* Info.plist */,
@@ -152,6 +158,8 @@
 				498BD16920A3682800B0C6D8 /* loadingView.swift in Sources */,
 				498BD16B20A37BFE00B0C6D8 /* SplashScreenView.swift in Sources */,
 				494DE3A020A251F7009A3D66 /* SlideInView.swift in Sources */,
+				494250AE20B4D52A006F6FF1 /* ToDoTableViewController.swift in Sources */,
+				494250AC20B4CF79006F6FF1 /* UILabel+animations.swift in Sources */,
 				494DE38C20A2514A009A3D66 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

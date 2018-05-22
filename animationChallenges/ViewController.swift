@@ -9,23 +9,28 @@
 import UIKit
 
 class ViewController: UIViewController {
+    let label = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        let loading = SplashScreenView(frame: view.frame, logoColor: UIColor.black, logoSize: CGSize(width: 200, height: 200), logoName: "apple")
-        view.addSubview(loading)
+        // Create UIlabel
+        
+        label.text = "ToDo Task"
+        
+        let tapGestureRec = UITapGestureRecognizer(target: label, action: #selector(label.strikeOut))
+        let labelFrame = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 40, height: 20)
+        label.frame = labelFrame
+        label.addGestureRecognizer(tapGestureRec)
+        view.addSubview(label)
         
         
         
-//        view.backgroundColor = UIColor.black
-//        let hamburgerMenuFrame = CGRect(x: 0, y: 0, width: 100, height: view.bounds.maxY)
-//        let hamburgerMenu = HamburgerMenuView(frame: hamburgerMenuFrame)
-//        view.addSubview(hamburgerMenu)
         
-        
-        
+    }
+    
+    @objc func strike() {
+        label.strikeOut()
     }
     
     @objc func showMenu() {
